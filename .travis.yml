@@ -22,4 +22,3 @@ deploy:
         branch: master
 notifications:
     email: false
-    
