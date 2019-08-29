@@ -1,0 +1,25 @@
+language: java
+jdk:
+    - oraclejdk8
+before_install:
+    - sudo apt-get-update
+    - cd app/
+    - echo "Let's start maven packge"
+    - mvn clean package
+    - cd ..
+    - echo "Fechando before instalL"
+scprit:
+    - docker-compose build
+before_deploy:
+    echo: "BeforeDeploy"
+    echo: "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+deploy:
+    provider: script
+    script:
+        docker tag docker tag docker-to-aws-with-java:latest 0biwanken0bi/docker-to-aws-with-java:latest;
+        docker push 0biwanken0bi/docker-to-aws-with-java;
+    on:
+        branch: master
+notifications:
+    email: false
+    
